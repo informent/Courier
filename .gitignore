@@ -3,3 +3,6 @@ obj/
 test-output/
 tests/bin/
 tests/obj/
+
+installer-payload/
+installer-output/
