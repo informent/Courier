@@ -7,7 +7,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
-namespace OpenShare;
+namespace Courier;
 public sealed record TransferHeader(string Name, long Length, string Sha256);
 public sealed record TransferReceipt(string Direction, DateTimeOffset CompletedAt, string Name, long Length, string Sha256);
 public sealed record PairingCode(string Host, int Port, string Fingerprint, string Secret)

@@ -3,7 +3,7 @@ using System.Net.Security;
 using System.Security.Authentication;
 using System.Security.Cryptography;
 using System.Net.Sockets;
-using OpenShare;
+using Courier;
 using System.Text.Json;
 using System.Diagnostics;
 if (args.Length == 2 && args[0] == "--receiver")
@@ -186,7 +186,7 @@ async Task<SslStream> Connect(TcpClient client)
 {
     var stream = new SslStream(client.GetStream(), false, (_, cert, _, _) =>
         cert is not null && cert.GetCertHashString(HashAlgorithmName.SHA256) == session.Certificate.GetCertHashString(HashAlgorithmName.SHA256));
-    await stream.AuthenticateAsClientAsync(new SslClientAuthenticationOptions { TargetHost = "OpenShare" });
+    await stream.AuthenticateAsClientAsync(new SslClientAuthenticationOptions { TargetHost = "Courier" });
     await stream.WriteAsync(session.Secret);
     var acknowledgement = new byte[1];
     await stream.ReadExactlyAsync(acknowledgement);

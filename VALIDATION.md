@@ -1,4 +1,4 @@
-# OpenShare 1.0.0 validation
+# Courier 1.0.0 validation
 
 ## Verified locally on Windows, September 27, 2026
 
@@ -17,7 +17,7 @@
 
 ## Limits, not passes
 
-The [clean Windows CI run](https://github.com/informent/OpenShare/actions/runs/36347340630) also passed the transfer suite, build, self-contained publishing, and all three packaged UI workflows (Accept, Decline, Expire). This confirms a second Windows environment, not a transfer between two physical PCs.
+The [clean Windows CI run](https://github.com/informent/Courier/actions/runs/36347340630) also passed the transfer suite, build, self-contained publishing, and all three packaged UI workflows (Accept, Decline, Expire). This confirms a second Windows environment, not a transfer between two physical PCs.
 
 - Two physical PCs, separate Wi-Fi networks, firewall profiles and routed networks have not been exercised. Same-PC processes are not a substitute for that coverage.
 - No independent security audit, exhaustive DPI/accessibility audit or code-signing certificate.

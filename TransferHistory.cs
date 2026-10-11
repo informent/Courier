@@ -1,7 +1,7 @@
 using System.Text.Json;
 using System.IO;
 
-namespace OpenShare;
+namespace Courier;
 
 public static class TransferHistory
 {
