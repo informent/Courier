@@ -1,4 +1,4 @@
-# OpenShare 1.0.0
+# Courier 1.0.0
 
 - Save local receipts only after confirmed, SHA-256-verified delivery.
 - Retain the newest 100 transfers using atomic history-file replacement.
@@ -11,7 +11,7 @@ This grouped reliability update adds receiver consent, storage safeguards, usabl
 - Cancel sending as well as receiving. Hash large sources before connecting to avoid receiver idle timeouts.
 - Show transferred size, approximate speed, estimated remaining time and the verification stage.
 - Correct a clipped Send button and provide scrolling at smaller window sizes.
-- Write privacy-minimized diagnostic logs under Downloads/GITHUB/OpenShare/Logs.
+- Write privacy-minimized diagnostic logs under Downloads/GITHUB/Courier/Logs.
 - Test 256 MiB encrypted transfers between separate processes, Unicode names, locked sources, blocked destinations, and failure cleanup.
 - Exercise the packaged app's file picker, pairing, acceptance, rejection and timeout through automated UI tests.
 

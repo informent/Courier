@@ -41,10 +41,10 @@ function Window-For($process) {
 }
 $testDirectory = Join-Path ([IO.Path]::GetTempPath()) ('openshare-ui-' + [Guid]::NewGuid().ToString('N'))
 [IO.Directory]::CreateDirectory($testDirectory) | Out-Null
-$fileName = 'OpenShare-UI-' + [Guid]::NewGuid().ToString('N') + '.txt'
+$fileName = 'Courier-UI-' + [Guid]::NewGuid().ToString('N') + '.txt'
 $source = Join-Path $testDirectory $fileName
-$destination = Join-Path ([Environment]::GetFolderPath('MyDocuments')) ('OpenShare\' + $fileName)
-[IO.File]::WriteAllText($source, 'OpenShare automated UI transfer fixture.')
+$destination = Join-Path ([Environment]::GetFolderPath('MyDocuments')) ('Courier\' + $fileName)
+[IO.File]::WriteAllText($source, 'Courier automated UI transfer fixture.')
 $receiver = $null
 $sender = $null
 try {

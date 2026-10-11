@@ -3,7 +3,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Windows;
 using Forms = System.Windows.Forms;
-namespace OpenShare;
+namespace Courier;
 public partial class MainWindow : Window
 {
     private TcpListener? listener; private CancellationTokenSource? cancellation; private CancellationTokenSource? sending; private string? receiveFolder; private string? selectedFile; private int port;

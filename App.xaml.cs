@@ -1,6 +1,6 @@
 using System.Windows;
 using System.IO;
-namespace OpenShare;
+namespace Courier;
 public partial class App : System.Windows.Application
 {
     public App()
@@ -9,7 +9,7 @@ public partial class App : System.Windows.Application
         DispatcherUnhandledException += (_, e) =>
         {
             Diagnostics.Record("fatal-ui", e.Exception);
-            System.Windows.MessageBox.Show("OpenShare encountered an unexpected error. A diagnostic was attempted in Downloads\\GITHUB\\OpenShare\\Logs. Restart the app before trying again.", "OpenShare error");
+            System.Windows.MessageBox.Show("Courier encountered an unexpected error. A diagnostic was attempted in Downloads\\GITHUB\\Courier\\Logs. Restart the app before trying again.", "Courier error");
             e.Handled = true;
             Shutdown(1);
         };
@@ -22,11 +22,11 @@ public static class Diagnostics
     {
         try
         {
-            var folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads", "GITHUB", "OpenShare", "Logs");
+            var folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads", "GITHUB", "Courier", "Logs");
             Directory.CreateDirectory(folder);
             // Never log exception messages, paths, file names, pairing codes or file contents.
             var line = $"{DateTimeOffset.UtcNow:O} {operation} {exception?.GetType().Name ?? "OK"} {exception?.HResult.ToString("X8") ?? ""}{Environment.NewLine}";
-            File.AppendAllText(Path.Combine(folder, $"OpenShare-{DateTime.UtcNow:yyyyMMdd}-{Environment.ProcessId}.log"), line);
+            File.AppendAllText(Path.Combine(folder, $"Courier-{DateTime.UtcNow:yyyyMMdd}-{Environment.ProcessId}.log"), line);
         }
         catch { /* Diagnostics must never prevent startup or recovery. */ }
     }

@@ -10,14 +10,27 @@ jobs:
       - uses: actions/setup-dotnet@v6
         with: { dotnet-version: 10.0.x }
       - run: dotnet run --project tests/TransferTests.csproj --nologo
-      - run: dotnet build OpenShare.csproj -c Release --nologo
+      - run: dotnet build Courier.csproj -c Release --nologo
       - name: Publish executable for UI tests
-        run: dotnet publish OpenShare.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -o test-output
+        run: dotnet publish Courier.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -o test-output
       - name: Packaged application UI checks
         timeout-minutes: 5
         shell: powershell
         run: |
           foreach ($decision in @('Accept', 'Decline', 'Expire')) {
-            powershell -NoProfile -ExecutionPolicy Bypass -File ./tests/UiSmoke.ps1 -Exe "$pwd/test-output/OpenShare.exe" -Decision $decision
+            powershell -NoProfile -ExecutionPolicy Bypass -File ./tests/UiSmoke.ps1 -Exe "$pwd/test-output/Courier.exe" -Decision $decision
             if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           }
+      - name: Verify product branding
+        shell: pwsh
+        run: |
+          $exe = Join-Path $PWD 'test-output/Courier.exe'
+          $info = [System.Diagnostics.FileVersionInfo]::GetVersionInfo($exe)
+          if ($info.ProductName -ne 'Courier' -or $info.FileDescription -ne 'Courier') { throw 'Executable product branding is incorrect' }
+      - uses: actions/upload-artifact@v7
+        with:
+          name: Courier-win-x64
+          path: |
+            test-output/*.exe
+            test-output/*.dll
+          if-no-files-found: error
