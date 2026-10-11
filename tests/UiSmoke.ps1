@@ -43,7 +43,7 @@ $testDirectory = Join-Path ([IO.Path]::GetTempPath()) ('openshare-ui-' + [Guid]:
 [IO.Directory]::CreateDirectory($testDirectory) | Out-Null
 $fileName = 'Courier-UI-' + [Guid]::NewGuid().ToString('N') + '.txt'
 $source = Join-Path $testDirectory $fileName
-$destination = Join-Path ([Environment]::GetFolderPath('MyDocuments')) ('Courier\' + $fileName)
+$destination = Join-Path ([Environment]::GetFolderPath('MyDocuments')) ('OpenShare\' + $fileName)
 [IO.File]::WriteAllText($source, 'Courier automated UI transfer fixture.')
 $receiver = $null
 $sender = $null
