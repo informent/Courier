@@ -10,9 +10,11 @@ jobs:
       - uses: actions/setup-dotnet@v6
         with: { dotnet-version: 10.0.x }
       - run: dotnet run --project tests/TransferTests.csproj --nologo
+      - run: dotnet run --project tests/ReceiptTests.csproj --nologo
       - run: dotnet build Courier.csproj -c Release --nologo
       - name: Publish executable for UI tests
         run: dotnet publish Courier.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -o test-output
+      - run: pwsh -File tests/Test-Receipts.ps1 -Exe ./test-output/Courier.exe
       - name: Packaged application UI checks
         timeout-minutes: 5
         shell: powershell
