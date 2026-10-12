@@ -57,12 +57,12 @@ The legacy TLS name remains unchanged so the rename does not alter the transfer 
 
 Windows setup packages install Courier for your current account, bundle the .NET runtime, create a Start menu shortcut and register an uninstaller. A desktop shortcut is optional. No administrator password or manual file copying is required. Existing settings and saved data stay in their current locations. The portable ZIP remains available.
 
-Download `Courier-v1.1.1-setup.exe` from Releases and run it.
+Download `Courier-v1.2.0-setup.exe` from Releases and run it.
 
 For unattended deployment:
 
 ```powershell
-Start-Process .\Courier-v1.1.1-setup.exe -ArgumentList '/VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP-' -Wait -PassThru
+Start-Process .\Courier-v1.2.0-setup.exe -ArgumentList '/VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP-' -Wait -PassThru
 ```
 
 Build from source with the [open-source Inno Setup compiler](https://github.com/jrsoftware/issrc) installed:
@@ -72,3 +72,16 @@ pwsh -File scripts/Build-Setup.ps1 -Verify
 ```
 
 The verification option installs into a temporary test folder, checks reinstall and launch, then uninstalls. It runs on the hosted Windows runner during CI. It does not remove existing user settings or backups.
+
+## Export and verify transfer receipts
+
+Version 1.2 adds headless receipt reports. Export the current account's last 100 receipts, or replace `default` with a saved history file:
+
+```powershell
+Start-Process .\Courier.exe -ArgumentList '--export-history default --report "D:\Reports\receipts.json"' -WindowStyle Hidden -Wait -PassThru
+Start-Process .\Courier.exe -ArgumentList '--verify-receipt "D:\Reports\receipts.json" 1 "D:\Received\file.zip" --report "D:\Reports\verification.json"' -WindowStyle Hidden -Wait -PassThru
+```
+
+Receipt numbers start at 1 in report order, oldest first. Verification streams the selected local file and compares its byte count and SHA-256 with the receipt. Renamed files can still match. Exit code 0 means success, 3 means the file differs, and 2 means invalid input or an operation failure. Reports never replace an existing file; their parent folder must already exist. Receipt reports contain filenames and completion times, so share them intentionally. They contain no pairing codes, secrets, peer addresses or file contents. A receipt checks content integrity; it does not establish who sent a file and is not a digital signature.
+
+History reads are bounded to 1 MiB and 100 validated entries. Corrupt history is preserved and reported, and simultaneous Courier processes serialize history updates. A history write failure after delivery now reports the confirmed transfer with a separate history warning. Receipt export and verification run without opening a window or contacting the network.

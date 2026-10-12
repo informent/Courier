@@ -5,7 +5,16 @@ public partial class App : System.Windows.Application
 {
     public App()
     {
-        Startup += (_, _) => { Diagnostics.Record("startup"); new MainWindow().Show(); };
+        Startup += (_, e) =>
+        {
+            if (ReceiptCommand.IsCommand(e.Args))
+            {
+                try { Shutdown(ReceiptCommand.Run(e.Args)); }
+                catch (Exception) { Shutdown(2); }
+                return;
+            }
+            Diagnostics.Record("startup"); new MainWindow().Show();
+        };
         DispatcherUnhandledException += (_, e) =>
         {
             Diagnostics.Record("fatal-ui", e.Exception);
